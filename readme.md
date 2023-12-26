@@ -1,6 +1,7 @@
 # Parallel Computing in Python and C++: SIMD, Multithreading, and CUDA
-This repository demonstrates the implementation of a feedforward neural network layer using various parallel computing techniques in Python. It includes SIMD vector processing, Multithreading using OpenMP, and CUDA for GPU acceleration. Each method leverages different hardware capabilities to enhance computational performance.
+In this repository, we focus on constructing a feedforward neural network layer by harnessing a variety of parallel computing methods in Python. This includes leveraging SIMD vector processing, utilizing multithreading through OpenMP, and optimizing with CUDA for GPU enhancement. Each approach is specifically designed to optimize the unique advantages offered by different hardware systems, thereby enhancing overall computational effectiveness. Our primary objective revolves around optimizing machine learning model inferences at the CPU core level. This is especially crucial for models deployed as services, aiming to achieve peak efficiency and performance. 
 
+The current scope of this project is centered on implementing fundamental CPU optimization techniques for a singular feedforward layer.
 ## Table of Contents
 1. [SIMD Vector Processing](#simd-vector-processing)
 2. [Multithreading with OpenMP](#multithreading-with-openmp)
@@ -83,49 +84,85 @@ Delving into CUDA, we demonstrate the application of this powerful GPU accelerat
 - **Multithreading with OpenMP**: Utilizing CPU cores to their fullest with parallel loop executions.
 - **CUDA**: Direct implementation of CUDA kernels for handling computationally intensive tasks on NVIDIA GPUs.
 
-Stay tuned for further updates and implementations. Contributions and suggestions are always welcome!
+# Integrating C++ and Python
+
+This section has the basic steps which involves integerating the above c++ snippets in python
+
+### Steps to Integrate
+
+1. **Compile C++ Code to Shared Library**: First, ensure that the C++ feed forward layer code is compiled to a shared library. In our case, it's compiled to `libfeedforward.so`.
+
+2. **Load the Library in Python**: Use `ctypes.CDLL` to load the compiled shared library.
+   ```python
+   import ctypes
+   import numpy as np
+
+   lib = ctypes.CDLL('/path/to/libfeedforward.so')
+   ```
+
+3. **Define Argument and Return Types**: Before calling functions from the shared library, you need to define the argument and return types for these functions. This is crucial as it allows `ctypes` to correctly pass data between Python and C++.
+   ```python
+   lib.feed_forward_MultSIMD_prefetch.argtypes = [
+       ctypes.c_int,  # N (number of elements)
+       np.ctypeslib.ndpointer(dtype=np.float32, ndim=1, flags='C_CONTIGUOUS'),  # input
+       np.ctypeslib.ndpointer(dtype=np.float32, ndim=1, flags='C_CONTIGUOUS'),  # weights
+       np.ctypeslib.ndpointer(dtype=np.float32, ndim=1, flags='C_CONTIGUOUS'),  # output
+       ctypes.c_int   # num_threads if needed
+   ]
+   lib.feed_forward_MultSIMD_prefetch.restype = None
+   ```
+
+4. **Call the Function**: With the setup complete, you can now call the C++ function as if it were a Python function.
+   ```python
+   N = 1000  # Example array size
+   input_data = np.random.randn(N).astype(np.float32)
+   weights = np.random.randn(N).astype(np.float32)
+   output = np.empty(N, dtype=np.float32)
+   num_threads = 4  # Example number of threads
+
+   lib.feed_forward_MultSIMD_prefetch(N, input_data, weights, output, num_threads)
+   ```
 
 
 # Parallel Computing Techniques: Performance Analysis
 
 This README presents a detailed analysis of the performance characteristics of different parallel computing approaches including CUDA, Multithreading, SIMD, and a combination of Multithreading & SIMD. The analysis is based on profiling data obtained from executing a feedforward layer implementation using these techniques.
 
-## Performance Summary Table
+## Performance Analysis
 
-| Technique                     | Execution Time (seconds) | Total Function Calls | 
-|-------------------------------|-------------------------|----------------------|
-| CUDA                          | 0.01084                 | 4002                 | 
-| Multithreading                | 0.37423                 | 18002                |   
-| SIMD                          | 0.33688                 | 18002                |   
-| SIMD (with prefetching)       | 0.28095                 | 18002                |
-| Multithreading & SIMD Combined| 0.24423                 | 18002                |  
+In this section, we provide a detailed analysis of the computational performance of various parallel computing techniques, measured in MFLOPS (Million Floating Point Operations Per Second). The analysis helps in understanding the efficiency and effectiveness of each method.
 
-## Detailed Analysis
+### Performance Summary Table
 
-### CUDA Profiling
-- **Fast Execution**: CUDA shows the fastest execution with only 0.01084 seconds. This demonstrates the efficiency of GPU parallel processing for data-intensive tasks.
-- **Lower Function Calls**: CUDA has fewer total function calls, indicating a more direct computation path and less overhead.
+| Technique                     | Execution Time (seconds) | MFLOPS              | 
+|-------------------------------|-------------------------|---------------------|
+| Multithreading                | 0.34823                 | 47.04               |   
+| SIMD                          | 0.3388                  | 48.3                |   
+| SIMD (with prefetching)       | 0.31                    | 51.2                |
+| Multithreading & SIMD Combined| 0.42                    | 38.14               |  
+| Multithreading & SIMD prefetch| 0.23                    | 68.29               |  
 
-### Multithreading Profiling
-- **Increased Overhead**: With the highest execution time of 0.37423 seconds, multithreading shows increased overhead compared to CUDA.
-- **High Function Calls**: The higher number of function calls suggests more time spent in setting up and managing threads.
+### Detailed Analysis
 
-### SIMD Profiling
-- **Moderate Performance**: SIMD provides a middle ground in performance, with an execution time of 0.33688 seconds.
-- **Effective for Vectorizable Tasks**: The results indicate that SIMD is effective for tasks that can be vectorized but may not reach the performance levels of GPU processing.
+- **Multithreading:**
+  - **Total FLOPs**: Approximately 16.37 billion.
+  - **Analysis**: Shows good parallelization, but per-operation efficiency is lower than SIMD.
 
-### SIMD Profiling with Prefetching
-- **Enhanced Performance**: SIMD with prefetching shows improved performance (0.28095 seconds), demonstrating the effectiveness of prefetching in optimizing memory access.
-- **Optimized Memory Access**: The prefetching technique helps in reducing cache misses, thereby enhancing the performance of vectorizable tasks.
+- **SIMD:**
+  - **Total FLOPs**: Approximately 16.36 billion.
+  - **Analysis**: Better efficiency per operation due to effective vectorization.
 
-### Combined Multithreading and SIMD
-- **Improved Performance Over Multithreading Alone**: The combined approach shows better performance (0.24423 seconds) than using multithreading alone.
-- **Balanced Approach**: This method balances task-level and data-level parallelism, showcasing a significant performance improvement.
+- **SIMD with Prefetching:**
+  - **Total FLOPs**: Approximately 15.87 billion.
+  - **Analysis**: Prefetching improves cache utilization, leading to faster execution.
 
-### Conclusion
-- **CUDA is Most Efficient for Parallelizable Tasks**: For operations that are highly parallelizable, CUDA provides the best performance.
-- **Effective Use of CPU Parallelism**: While not as fast as CUDA, SIMD and combined techniques efficiently utilize CPU parallelism.
-- **Selection Based on Task and Hardware**: The choice of technique should consider the nature of the task and available hardware resources.
+- **Multithreading & SIMD Combined:**
+  - **Total FLOPs**: Approximately 16.02 billion.
+  - **Analysis**: The combination doesn't yield the expected improvement, possibly due to overheads.
+
+- **Multithreading & SIMD with Prefetching:**
+  - **Total FLOPs**: Approximately 15.71 billion.
+  - **Analysis**: The most efficient method, significantly enhancing performance.
 
 
 

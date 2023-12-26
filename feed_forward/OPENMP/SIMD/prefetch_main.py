@@ -28,6 +28,9 @@ if __name__ == "__main__":
 
     # Example data
     N = 8192
+    flops_per_operation = 2
+    iterations = 1000
+    total_flops = flops_per_operation * N * iterations
     input_data = np.random.randn(N).astype(np.float32)
     weights = np.random.randn(N).astype(np.float32)
     output = np.empty(N, dtype=np.float32)
@@ -35,7 +38,11 @@ if __name__ == "__main__":
     # Call the C++ function
     start_time = timeit.default_timer()
     task()
-    logger.info(f"Time taken by SIMD: {timeit.default_timer() - start_time} seconds")
+    execution_time = timeit.default_timer() - start_time
+    logger.info(f"Time taken by SIMD: {execution_time} seconds")
+
+    mflops = (total_flops / execution_time) / 1e6
+    logger.info(f"mflops : {mflops}")
 
     # Profiling with cProfile and capturing the output
     profiler = cProfile.Profile()

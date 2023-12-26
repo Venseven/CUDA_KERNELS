@@ -32,6 +32,9 @@ if __name__ == "__main__":
     kernel = module.get_function('feed_forward_kernel')
     N = 8192
     # Example data
+    flops_per_operation = 2
+    iterations = 1000
+    total_flops = flops_per_operation * N * iterations
     input_tensor = torch.randn(N, device='cuda')
     weights_tensor = torch.randn(N, device='cuda')
 
@@ -45,8 +48,10 @@ if __name__ == "__main__":
     # Measure and log the time taken by the CUDA kernel
     start_time = timeit.default_timer()
     task()
+    execution_time = timeit.default_timer() - start_time
     logger.info(f"Time taken by CUDA: {timeit.default_timer() - start_time} seconds")
-
+    mflops = (total_flops / execution_time) / 1e6
+    logger.info(f"mflops : {mflops}")
     # Profiling with cProfile and capturing the output
     profiler = cProfile.Profile()
     profiler.enable()
