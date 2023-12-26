@@ -1,7 +1,9 @@
-# Parallel Computing in Python and C++: SIMD, Multithreading, and CUDA
-In this repository, we focus on constructing a feedforward neural network layer by harnessing a variety of parallel computing methods in Python. This includes leveraging SIMD vector processing, utilizing multithreading through OpenMP, and optimizing with CUDA for GPU enhancement. Each approach is specifically designed to optimize the unique advantages offered by different hardware systems, thereby enhancing overall computational effectiveness. Our primary objective revolves around optimizing machine learning model inferences at the CPU core level. This is especially crucial for models deployed as services, aiming to achieve peak efficiency and performance. 
+# Accelerating ML Inference in Python and C++: Utilizing SIMD, Multithreading, and CUDA for Parallel Computing
+In this repository, we focus on constructing a feedforward neural network layer by harnessing a variety of parallel computing methods in Python. This includes leveraging SIMD vector processing, utilizing multithreading through OpenMP, and optimizing with CUDA for GPU enhancement. Each approach is specifically designed to optimize the unique advantages offered by different hardware systems, thereby enhancing overall computational effectiveness. 
 
-The current scope of this project is centered on implementing fundamental CPU optimization techniques for a singular feedforward layer.
+My primary objective revolves around optimizing machine learning model inferences at the CPU core level. This is especially crucial for models deployed as services, aiming to achieve peak efficiency and performance. 
+
+The current scope of this repository is centered on implementing fundamental CPU optimization techniques for a **singular feedforward layer**.
 ## Table of Contents
 1. [SIMD Vector Processing](#simd-vector-processing)
 2. [Multithreading with OpenMP](#multithreading-with-openmp)
