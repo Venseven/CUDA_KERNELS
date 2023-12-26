@@ -1,0 +1,15 @@
+2023-12-25T19:06:47.657317-0800 INFO CUDA Block size: 32, CUDA Grid Size: 256
+2023-12-25T19:06:47.669299-0800 INFO Time taken by CUDA: 0.010839863971341401 seconds
+2023-12-25T19:06:47.681153-0800 INFO Profiling Output:
+         4002 function calls in 0.011 seconds
+
+   Random listing order was used
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     3000    0.000    0.000    0.000    0.000 {method 'data_ptr' of 'torch._C._TensorBase' objects}
+     1000    0.000    0.000    0.000    0.000 {method 'numel' of 'torch._C._TensorBase' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.011    0.011    0.011    0.011 /scratch/subramav/CUDA_KERNELS/feed_forward/CUDA/main.py:23(task)
+
+
+

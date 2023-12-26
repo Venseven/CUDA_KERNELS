@@ -1,0 +1,19 @@
+2023-12-25T19:18:18.045218-0800 INFO Num Threads - 8192
+2023-12-25T19:18:18.421230-0800 INFO Time taken by 8192 CPU threads: 0.37422873900504783 seconds
+2023-12-25T19:18:18.655879-0800 INFO Profiling Output:
+         18002 function calls in 0.234 seconds
+
+   Random listing order was used
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     3000    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+     3000    0.013    0.000    0.017    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/numpy/ctypeslib.py:182(from_param)
+     3000    0.004    0.000    0.004    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/numpy/core/_internal.py:250(__init__)
+     3000    0.004    0.000    0.009    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/numpy/core/_internal.py:267(data_as)
+     3000    0.003    0.000    0.012    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/numpy/core/_internal.py:345(_as_parameter_)
+        1    0.205    0.205    0.234    0.234 /scratch/subramav/CUDA_KERNELS/feed_forward/OPENMP/Multithreading/main.py:11(task)
+     3000    0.005    0.000    0.005    0.000 /scratch/envs/kernels/lib/python3.10/ctypes/__init__.py:509(cast)
+
+
+
