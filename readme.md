@@ -70,12 +70,12 @@ This README presents a detailed analysis of the performance characteristics of d
 
 ## Performance Summary Table
 
-| Technique                     | Execution Time (seconds) | Total Function Calls | Significant Function Calls |
-|-------------------------------|-------------------------|----------------------|----------------------------|
-| CUDA                          | 0.01084                 | 4002                 | data_ptr (3000 calls)      |
-| Multithreading                | 0.37423                 | 18002                | from_param (3000 calls)    |
-| SIMD                          | 0.33688                 | 18002                | from_param (3000 calls)    |
-| Multithreading & SIMD Combined| 0.24423                 | 18002                | from_param (3000 calls)    |
+| Technique                     | Execution Time (seconds) | Total Function Calls | 
+|-------------------------------|-------------------------|----------------------|
+| CUDA                          | 0.01084                 | 4002                 | 
+| Multithreading                | 0.37423                 | 18002                |   
+| SIMD                          | 0.33688                 | 18002                |   
+| Multithreading & SIMD Combined| 0.24423                 | 18002                |  
 
 ## Detailed Analysis
 
