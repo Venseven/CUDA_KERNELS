@@ -144,6 +144,14 @@ In this section, we provide a detailed analysis of the computational performance
 | Multithreading & SIMD Combined| 0.42                    | 38.14               |  
 | Multithreading & SIMD prefetch| 0.23                    | 68.29               |  
 
+
+### Torch ELU optimization
+
+| Technique                     | Execution Time (seconds) | MFLOPS             | 
+|-------------------------------|-------------------------|---------------------|
+| Torch ELU                     | 0.0711                  | 28.79               |   
+| CUDA Kernel ELU               | 0.0096                  | 211.9               |   
+
 ### Detailed Analysis
 
 - **Multithreading:**
