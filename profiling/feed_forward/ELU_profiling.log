@@ -1,0 +1,26 @@
+2023-12-26T20:04:57.009244-0800 INFO CUDA Block size: 32, CUDA Grid Size: 32
+2023-12-26T20:04:57.020019-0800 INFO Time taken by CUSTOM FUCNTION: 0.009666515979915857 seconds
+2023-12-26T20:04:57.020503-0800 INFO mflops for custom function: 211.92456312724104
+2023-12-26T20:04:57.091986-0800 INFO mflops for torch ELU: 28.79490767838554
+2023-12-26T20:04:57.092387-0800 INFO Time taken by torch ELU: 0.07112368696834892 seconds
+2023-12-26T20:04:57.093406-0800 INFO Profiling Output:
+         130004 function calls (116004 primitive calls) in 0.071 seconds
+
+   Random listing order was used
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     1000    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+42000/28000    0.012    0.000    0.024    0.000 {built-in method builtins.isinstance}
+        2    0.000    0.000    0.000    0.000 {built-in method time.perf_counter}
+    14000    0.001    0.000    0.001    0.000 {function _ParameterMeta.__instancecheck__ at 0x7f15bcdee560}
+    42000    0.003    0.000    0.003    0.000 {method 'get' of 'dict' objects}
+     1000    0.001    0.000    0.001    0.000 {built-in method torch._C._log_api_usage_once}
+     1000    0.003    0.000    0.070    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/torch/nn/modules/activation.py:508(__init__)
+     1000    0.011    0.000    0.058    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/torch/nn/modules/module.py:254(__init__)
+    14000    0.028    0.000    0.056    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/torch/nn/modules/module.py:1210(__setattr__)
+    14000    0.010    0.000    0.014    0.000 /scratch/envs/kernels/lib/python3.10/site-packages/torch/nn/parameter.py:9(__instancecheck__)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.001    0.001    0.071    0.071 /scratch/subramav/CUDA_KERNELS/nn/ELU/elu.py:36(tasks)
+
+
+
