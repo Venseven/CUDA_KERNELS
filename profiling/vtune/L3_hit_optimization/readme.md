@@ -51,6 +51,10 @@ Deeper assembly-level analysis:
 
 The instruction `movssl (%rbp,%r14,4), %xmm0` showed significant latency (143.9%).
 
+## what is movssl ?
+
+`0x13d0: movssl (%rbp,%r14,4), %xmm0` - This is a SIMD instruction that loads a single-precision floating-point value into an XMM register. It corresponds to accessing an element of the input or weights array.
+
 | Address | Source Line | Assembly                         | CPU Time: Total | CPU Time: Self | L1 Bound | L2 Bound | L3 Bound | DRAM Bound | Store Bound | Memory Bound | Loads: Total | Loads: Self | Stores: Total | Stores: Self | Avg Latency (cycles): Total | Avg Latency (cycles): Self |
 |---------|-------------|----------------------------------|-----------------|----------------|----------|----------|----------|------------|-------------|--------------|--------------|-------------|---------------|--------------|----------------------------|---------------------------|
 | 0x13d0  | 24          | movssl (%rbp,%r14,4), %xmm0      | 428.715ms       | 428.715ms      | 6.7%     | 0.0%     | 88.2%    | 0.0%       | 0.0%        | 91.7%        | 10,000,300   | 0.0%        | 0             | 0.0%        | 143.9%                      | 287                       |
