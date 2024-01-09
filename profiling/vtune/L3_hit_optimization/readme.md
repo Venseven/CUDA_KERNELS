@@ -1,5 +1,6 @@
 
 # Accelerating ML Inference in Python and C++
+This project focuses on optimizing a feed-forward array multiplication process using a multithreading approach in C++. The implementation leverages 4 threads and employs dynamic scheduling to enhance computational efficiency, which is particularly beneficial in high-performance computing (HPC) applications.
 
 ## VTUNE Profiling
 
